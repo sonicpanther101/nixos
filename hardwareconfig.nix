@@ -10,6 +10,7 @@
     #------------------------------------------------------------
     # [4070]
 
+  boot.kernelPackages = pkgs.linuxPackages_4_19;
   #normal setup (flickers on vivaldi and minecraft)
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
   hardware.opengl = {
