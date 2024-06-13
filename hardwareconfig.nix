@@ -11,7 +11,7 @@
     # [4070]
 
   #normal setup (flickers on vivaldi and minecraft)
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -21,6 +21,9 @@
   hardware.nvidia = {
     modesetting.enable = true;
     nvidiaSettings = true;
+    open = false;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
   };
 
 
