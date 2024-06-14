@@ -6,13 +6,11 @@
   options,
   ...
 }: {
+  #------------------------------------------------------------
+  # [4070]
 
-    #------------------------------------------------------------
-    # [4070]
-
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
   #normal setup (flickers on vivaldi and minecraft)
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -27,36 +25,34 @@
     powerManagement.finegrained = false;
   };
 
-
-    #------------------------------------------------------------
-    # [B550]
+  #------------------------------------------------------------
+  # [B550]
 
   systemd.services.bugfixSuspend-GPP0 = {
-    enable            = lib.mkDefault true;
-    description       = "Fix crash on wakeup from suspend/hibernate (b550 bugfix)";
+    enable = lib.mkDefault true;
+    description = "Fix crash on wakeup from suspend/hibernate (b550 bugfix)";
     unitConfig = {
-      Type            = "oneshot";
+      Type = "oneshot";
     };
     serviceConfig = {
-      User            = "root"; # root may not be necessary
+      User = "root"; # root may not be necessary
       # check for gppN, disable if enabled
       # lifted from  https://www.reddit.com/r/gigabyte/comments/p5ewjn/comment/ksbm0mb/ /u/Demotay
-      ExecStart       = "-${pkgs.bash}/bin/bash -c 'if grep 'GPP0' /proc/acpi/wakeup | grep -q 'enabled'; then echo 'GPP0' > /proc/acpi/wakeup; fi'";
-      RemainAfterExit = "yes";  # required to not toggle when `nixos-rebuild switch` is ran
-
+      ExecStart = "-${pkgs.bash}/bin/bash -c 'if grep 'GPP0' /proc/acpi/wakeup | grep -q 'enabled'; then echo 'GPP0' > /proc/acpi/wakeup; fi'";
+      RemainAfterExit = "yes"; # required to not toggle when `nixos-rebuild switch` is ran
     };
     wantedBy = ["multi-user.target"];
   };
 
   systemd.services.bugfixSuspend-GPP8 = {
-    enable            = lib.mkDefault true;
-    description       = "Fix crash on wakeup from suspend/hibernate (b550 bugfix)";
+    enable = lib.mkDefault true;
+    description = "Fix crash on wakeup from suspend/hibernate (b550 bugfix)";
     unitConfig = {
-      Type            = "oneshot";
+      Type = "oneshot";
     };
     serviceConfig = {
-      User            = "root";
-      ExecStart       = "-${pkgs.bash}/bin/bash -c 'if grep 'GPP8' /proc/acpi/wakeup | grep -q 'enabled'; then echo 'GPP8' > /proc/acpi/wakeup; fi''";
+      User = "root";
+      ExecStart = "-${pkgs.bash}/bin/bash -c 'if grep 'GPP8' /proc/acpi/wakeup | grep -q 'enabled'; then echo 'GPP8' > /proc/acpi/wakeup; fi''";
       RemainAfterExit = "yes";
     };
     wantedBy = ["multi-user.target"];
